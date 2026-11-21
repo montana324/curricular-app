@@ -1,0 +1,2430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" id="meta-theme-color" content="#F5F5F7" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Curricular" />
+  <title>Curricular App</title>
+  <meta name="apple-mobile-web-app-title" content="Curricular" />
+  <link rel="icon" type="image/png" href="./logo.png" />
+  <link rel="apple-touch-icon" href="./logo.png" />
+  <title>Curricular App</title>
+  <style>
+    :root {
+      --bg-primary: #F5F5F7;
+      --bg-secondary: #FFFFFF;
+      --bg-tertiary: #E5E5EA;
+      --bg-glass: rgba(245, 245, 247, 0.88);
+      --bg-card-glass: rgba(255, 255, 255, 0.88);
+      --text-primary: #1D1D1F;
+      --text-secondary: #6E6E73;
+      --text-tertiary: #8E8E93;
+      --border-color: rgba(0, 0, 0, 0.08);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.14);
+
+      --ios-blue: #007AFF;
+      --ios-blue-soft: rgba(0, 122, 255, 0.12);
+      --ios-green: #34C759;
+      --ios-green-soft: rgba(52, 199, 89, 0.14);
+      --ios-orange: #FF9500;
+      --ios-orange-soft: rgba(255, 149, 0, 0.14);
+      --ios-yellow: #FFCC00;
+      --ios-yellow-soft: rgba(255, 204, 0, 0.18);
+      --ios-red: #FF3B30;
+      --ios-red-soft: rgba(255, 59, 48, 0.12);
+      --ios-gray: #8E8E93;
+      --ios-gray-soft: rgba(142, 142, 147, 0.14);
+
+      --radius-sm: 10px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-pill: 999px;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    body.dark-mode {
+      --bg-primary: #000000;
+      --bg-secondary: #1C1C1E;
+      --bg-tertiary: #2C2C2E;
+      --bg-glass: rgba(28, 28, 30, 0.88);
+      --bg-card-glass: rgba(28, 28, 30, 0.9);
+      --text-primary: #F5F5F7;
+      --text-secondary: #98989D;
+      --text-tertiary: #636366;
+      --border-color: rgba(255, 255, 255, 0.1);
+      --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.65);
+
+      --ios-blue: #0A84FF;
+      --ios-blue-soft: rgba(10, 132, 255, 0.18);
+      --ios-green: #30D158;
+      --ios-green-soft: rgba(48, 209, 88, 0.18);
+      --ios-orange: #FF9F0A;
+      --ios-orange-soft: rgba(255, 159, 10, 0.18);
+      --ios-yellow: #FFD60A;
+      --ios-yellow-soft: rgba(255, 214, 10, 0.2);
+      --ios-red: #FF453A;
+      --ios-red-soft: rgba(255, 69, 58, 0.18);
+      --ios-gray: #8E8E93;
+      --ios-gray-soft: rgba(142, 142, 147, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    html {
+      background-color: var(--bg-primary);
+      transition: background-color 0.25s ease;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    .icon {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      flex-shrink: 0;
+    }
+    .icon-sm { width: 16px; height: 16px; }
+    .icon-lg { width: 24px; height: 24px; }
+
+    button {
+      border: none;
+      background: none;
+      color: inherit;
+      cursor: pointer;
+      font-size: 15px;
+      transition: opacity 0.15s ease, transform 0.12s ease, background-color 0.2s ease;
+    }
+    button:active { transform: scale(0.98); opacity: 0.82; }
+
+    .btn-primary {
+      width: 100%;
+      background-color: var(--ios-blue);
+      color: #FFFFFF;
+      font-weight: 600;
+      padding: 14px 18px;
+      border-radius: var(--radius-md);
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-secondary {
+      width: 100%;
+      background-color: var(--bg-tertiary);
+      color: var(--text-primary);
+      font-weight: 600;
+      padding: 13px 18px;
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-danger-soft {
+      width: 100%;
+      background-color: var(--ios-red-soft);
+      color: var(--ios-red);
+      font-weight: 600;
+      padding: 13px 18px;
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .ios-input, .ios-select, .ios-textarea {
+      width: 100%;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .ios-input:focus, .ios-select:focus, .ios-textarea:focus {
+      border-color: var(--ios-blue);
+    }
+    .ios-textarea { resize: vertical; min-height: 76px; }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .field-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: var(--text-secondary);
+    }
+
+    #onboarding-screen {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: calc(24px + var(--safe-top)) 20px calc(28px + var(--safe-bottom));
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .brand-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .brand-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      background: linear-gradient(145deg, var(--ios-blue), #34AADC);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      box-shadow: 0 10px 25px rgba(0, 122, 255, 0.28);
+    }
+    .brand-title {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .brand-subtitle {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .card-surface {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .segmented-control {
+      display: flex;
+      background-color: var(--bg-tertiary);
+      padding: 3px;
+      border-radius: 11px;
+      margin-bottom: 18px;
+    }
+    .segmented-btn {
+      flex: 1;
+      padding: 8px 10px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 9px;
+      color: var(--text-secondary);
+      text-align: center;
+    }
+    .segmented-btn.active {
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    .profile-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .profile-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      gap: 10px;
+    }
+    .profile-info {
+      flex: 1;
+      cursor: pointer;
+    }
+    .profile-name {
+      font-weight: 600;
+      font-size: 16px;
+    }
+    .profile-meta {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+    .btn-delete-profile {
+      padding: 7px 10px;
+      border-radius: 8px;
+      background-color: var(--ios-red-soft);
+      color: var(--ios-red);
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    #app-shell {
+      display: none;
+      padding-bottom: calc(88px + var(--safe-bottom));
+    }
+
+    .top-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background-color: var(--bg-glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-color);
+      padding: calc(12px + var(--safe-top)) 16px 12px;
+    }
+    .top-header::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--safe-top);
+      background-color: var(--bg-primary);
+      z-index: -1;
+      pointer-events: none;
+    }
+    .top-header-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .header-title-group h1 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+    .header-title-group p {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 1px;
+    }
+    .profile-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      padding: 6px 12px 6px 8px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: var(--shadow-sm);
+    }
+    .avatar-circle {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background-color: var(--ios-blue-soft);
+      color: var(--ios-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .main-container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .tab-view { display: none; }
+    .tab-view.active { display: block; animation: fadeIn 0.2s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+    .pills-scroll {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin-bottom: 12px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .pills-scroll::-webkit-scrollbar { display: none; }
+
+    .pill-btn {
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      background-color: var(--bg-secondary);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+    }
+    .pill-btn.active {
+      background-color: var(--ios-blue);
+      color: #FFFFFF;
+      border-color: var(--ios-blue);
+    }
+
+    .filter-pill {
+      padding: 5px 11px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+      background-color: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+    }
+    .filter-pill.active {
+      background-color: var(--text-primary);
+      color: var(--bg-secondary);
+      border-color: var(--text-primary);
+    }
+
+    .malla-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .desktop-toggle {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    @media (min-width: 860px) {
+      .desktop-toggle { display: inline-flex; }
+    }
+
+    .subjects-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .subjects-grid.board-mode {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      align-items: start;
+    }
+    .board-column {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .board-col-header {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      padding: 2px 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .subject-card {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: transform 0.18s ease, opacity 0.22s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+    }
+    .subject-card:hover {
+      border-color: rgba(0, 122, 255, 0.35);
+    }
+    .subject-card.state-bloqueada {
+      opacity: 0.56;
+    }
+
+    .focus-active .subject-card {
+      opacity: 0.25;
+      filter: blur(1px);
+    }
+    .focus-active .subject-card.focus-selected {
+      opacity: 1;
+      filter: none;
+      border: 1.5px solid var(--ios-blue);
+      box-shadow: var(--shadow-md);
+      transform: scale(1.01);
+    }
+    .focus-active .subject-card.focus-prev {
+      opacity: 1;
+      filter: none;
+      border: 1.5px solid var(--ios-orange);
+    }
+    .focus-active .subject-card.focus-next {
+      opacity: 1;
+      filter: none;
+      border: 1.5px solid var(--ios-green);
+    }
+
+    .focus-banner {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--ios-blue);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      gap: 10px;
+    }
+    .focus-banner.visible { display: flex; }
+    .focus-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 4px;
+    }
+
+    .card-top-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .subject-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .led-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .led-aprobada { background-color: var(--ios-green); box-shadow: 0 0 8px var(--ios-green-soft); }
+    .led-final { background-color: var(--ios-orange); box-shadow: 0 0 8px var(--ios-orange-soft); }
+    .led-cursando { background-color: var(--ios-yellow); box-shadow: 0 0 8px var(--ios-yellow-soft); }
+    .led-habilitada { background-color: var(--ios-blue); box-shadow: 0 0 8px var(--ios-blue-soft); }
+    .led-bloqueada { background-color: var(--ios-gray); }
+
+    .subject-name {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .subject-meta {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+      padding-left: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .status-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 9px;
+      border-radius: var(--radius-pill);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .badge-aprobada { background-color: var(--ios-green-soft); color: var(--ios-green); }
+    .badge-final { background-color: var(--ios-orange-soft); color: var(--ios-orange); }
+    .badge-cursando { background-color: var(--ios-yellow-soft); color: #B28900; }
+    body.dark-mode .badge-cursando { color: var(--ios-yellow); }
+    .badge-habilitada { background-color: var(--ios-blue-soft); color: var(--ios-blue); }
+    .badge-bloqueada { background-color: var(--ios-gray-soft); color: var(--text-secondary); }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    @media (min-width: 680px) {
+      .metrics-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .metric-card {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+    .metric-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    .metric-value {
+      font-size: 24px;
+      font-weight: 700;
+      margin-top: 4px;
+      letter-spacing: -0.5px;
+    }
+    .metric-sub {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      margin-top: 2px;
+    }
+
+    .section-card {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      gap: 10px;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .chart-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      padding: 8px 0;
+    }
+
+    .sim-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-color);
+      gap: 12px;
+    }
+    .sim-row:last-child { border-bottom: none; }
+    .sim-input {
+      width: 74px;
+      padding: 6px 8px;
+      text-align: center;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .alert-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      background-color: var(--ios-orange-soft);
+      border: 1px solid rgba(255, 149, 0, 0.25);
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+    .alert-card.urgent {
+      background-color: var(--ios-red-soft);
+      border-color: rgba(255, 59, 48, 0.25);
+    }
+
+    .event-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-color);
+      gap: 12px;
+    }
+    .event-item:last-child { border-bottom: none; }
+    .event-date-box {
+      min-width: 52px;
+      padding: 6px 8px;
+      border-radius: 10px;
+      background-color: var(--bg-primary);
+      text-align: center;
+      border: 1px solid var(--border-color);
+    }
+    .event-day { font-size: 16px; font-weight: 700; line-height: 1.1; }
+    .event-month { font-size: 10px; font-weight: 600; text-transform: uppercase; color: var(--ios-blue); }
+
+    .level-accordion {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      margin-bottom: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .level-header {
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+      gap: 10px;
+    }
+    .level-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .chevron {
+      transition: transform 0.2s ease;
+      color: var(--text-secondary);
+    }
+    .level-accordion.open .chevron {
+      transform: rotate(90deg);
+    }
+    .btn-add-level {
+      padding: 6px 11px;
+      border-radius: var(--radius-pill);
+      background-color: var(--ios-blue-soft);
+      color: var(--ios-blue);
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .level-body {
+      display: none;
+      border-top: 1px solid var(--border-color);
+      padding: 6px 14px;
+    }
+    .level-accordion.open .level-body {
+      display: block;
+    }
+    .manage-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 2px;
+      border-bottom: 1px solid var(--border-color);
+      gap: 10px;
+    }
+    .manage-row:last-child { border-bottom: none; }
+    .manage-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .btn-row-edit {
+      padding: 6px 10px;
+      border-radius: 8px;
+      background-color: var(--ios-blue-soft);
+      color: var(--ios-blue);
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-row-delete {
+      padding: 6px 10px;
+      border-radius: 8px;
+      background-color: var(--ios-red-soft);
+      color: var(--ios-red);
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 45;
+      background-color: var(--bg-glass);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border-top: 1px solid var(--border-color);
+      padding: 8px 8px calc(8px + var(--safe-bottom));
+    }
+    .bottom-nav-inner {
+      max-width: 560px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .nav-tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      color: var(--text-tertiary);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 4px 0;
+    }
+    .nav-tab.active {
+      color: var(--ios-blue);
+    }
+
+    .sheet-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      background-color: rgba(0, 0, 0, 0.42);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .sheet-backdrop.open { display: flex; }
+
+    .ios-sheet {
+      width: 100%;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background-color: var(--bg-secondary);
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      padding: 12px 20px calc(24px + var(--safe-bottom));
+      box-shadow: var(--shadow-lg);
+      animation: slideUp 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    @media (min-width: 600px) {
+      .sheet-backdrop { align-items: center; padding: 20px; }
+      .ios-sheet { border-radius: 24px; max-height: 86vh; }
+    }
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .sheet-handle {
+      width: 38px;
+      height: 5px;
+      border-radius: 99px;
+      background-color: var(--bg-tertiary);
+      margin: 0 auto 14px;
+    }
+    .sheet-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .sheet-close {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: var(--bg-tertiary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+    }
+
+    .state-selector-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    @media (min-width: 440px) {
+      .state-selector-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .state-option {
+      padding: 10px 8px;
+      border-radius: 11px;
+      border: 1.5px solid var(--border-color);
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+      background-color: var(--bg-primary);
+    }
+    .state-option.selected {
+      border-color: var(--ios-blue);
+      background-color: var(--ios-blue-soft);
+      color: var(--ios-blue);
+    }
+
+    .rel-box {
+      background-color: var(--bg-primary);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      margin-bottom: 14px;
+      border: 1px solid var(--border-color);
+    }
+    .rel-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+    .rel-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      padding: 4px 9px;
+      border-radius: 8px;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      margin: 2px 4px 2px 0;
+    }
+
+    .ios-switch {
+      position: relative;
+      width: 50px;
+      height: 30px;
+      background-color: var(--bg-tertiary);
+      border-radius: 99px;
+      transition: background-color 0.2s ease;
+      flex-shrink: 0;
+    }
+    .ios-switch.on { background-color: var(--ios-green); }
+    .ios-switch::after {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background-color: #FFFFFF;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease;
+    }
+    .ios-switch.on::after { transform: translateX(20px); }
+
+    .checkbox-list {
+      max-height: 180px;
+      overflow-y: auto;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      background-color: var(--bg-primary);
+      padding: 6px;
+    }
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      font-size: 13px;
+      border-radius: 6px;
+    }
+    .checkbox-item:hover { background-color: var(--bg-secondary); }
+    .checkbox-item small { color: var(--text-secondary); margin-left: auto; }
+  </style>
+</head>
+<body>
+
+  <!-- PANTALLA DE INICIO / SELECCIÓN DE PERFIL -->
+  <section id="onboarding-screen">
+    <div class="brand-header">
+      <div class="brand-icon">
+        <svg class="icon icon-lg" viewBox="0 0 24 24">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+      </div>
+      <h1 class="brand-title">Curricular</h1>
+      <p class="brand-subtitle">Planificación académica y correlatividades</p>
+    </div>
+
+    <div class="card-surface">
+      <div class="segmented-control">
+        <button type="button" class="segmented-btn active" id="tab-login-btn" onclick="switchAuthMode('login')">Ingresar</button>
+        <button type="button" class="segmented-btn" id="tab-create-btn" onclick="switchAuthMode('create')">Crear usuario</button>
+      </div>
+
+      <div id="auth-login-view">
+        <div id="saved-profiles-container" class="profile-list"></div>
+        <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between;">
+          <span style="font-size: 14px; font-weight: 500;">Modo noche</span>
+          <button type="button" class="ios-switch" id="onboarding-dark-switch" onclick="toggleDarkMode()" aria-label="Modo noche"></button>
+        </div>
+      </div>
+
+      <form id="auth-create-view" style="display: none;" onsubmit="handleCreateProfile(event)">
+        <div class="field-group">
+          <label class="field-label" for="input-username">Nombre de usuario</label>
+          <input class="ios-input" type="text" id="input-username" placeholder="Ej. Camila" required />
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="select-faculty">Facultad / Universidad</label>
+          <select class="ios-select" id="select-faculty" onchange="updateCareerOptions()" required></select>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="select-career">Carrera</label>
+          <select class="ios-select" id="select-career" required></select>
+        </div>
+        <button type="submit" class="btn-primary">Comenzar carrera</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- APLICACIÓN PRINCIPAL -->
+  <div id="app-shell">
+    <header class="top-header">
+      <div class="top-header-inner">
+        <div class="header-title-group">
+          <h1 id="header-career-title">Arquitectura</h1>
+          <p id="header-faculty-sub">FADU-UBA</p>
+        </div>
+        <button type="button" class="profile-pill-btn" onclick="openProfileModal()">
+          <span class="avatar-circle" id="header-avatar">U</span>
+          <span id="header-user-name">Usuario</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="main-container">
+      <section id="view-malla" class="tab-view active">
+        <div class="pills-scroll" id="level-pills"></div>
+
+        <div class="malla-toolbar">
+          <div class="pills-scroll" style="margin-bottom: 0;" id="filter-pills">
+            <button type="button" class="filter-pill active" data-filter="all" onclick="setFilter('all')">Todas</button>
+            <button type="button" class="filter-pill" data-filter="habilitada" onclick="setFilter('habilitada')">Habilitadas</button>
+            <button type="button" class="filter-pill" data-filter="cursando" onclick="setFilter('cursando')">Cursando</button>
+            <button type="button" class="filter-pill" data-filter="final" onclick="setFilter('final')">Finales pendientes</button>
+          </div>
+          <button type="button" class="desktop-toggle" id="board-toggle-btn" onclick="toggleBoardView()">
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="18" rx="1"></rect><rect x="14" y="3" width="7" height="18" rx="1"></rect></svg>
+            <span id="board-toggle-label">Vista panorámica</span>
+          </button>
+        </div>
+
+        <div class="focus-banner" id="focus-banner">
+          <div class="focus-legend">
+            <span><i class="legend-dot" style="background: var(--ios-blue);"></i>Seleccionada</span>
+            <span><i class="legend-dot" style="background: var(--ios-orange);"></i>Correlativas previas</span>
+            <span><i class="legend-dot" style="background: var(--ios-green);"></i>Destraba</span>
+          </div>
+          <button type="button" style="color: var(--ios-blue); font-weight: 600; font-size: 12px;" onclick="clearFocusMode()">Salir</button>
+        </div>
+
+        <div id="subjects-container" class="subjects-grid"></div>
+      </section>
+
+      <section id="view-stats" class="tab-view">
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-label">Promedio (sin aplazos)</div>
+            <div class="metric-value" id="stat-avg-no-fail">-</div>
+            <div class="metric-sub">Matemático simple</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Promedio (con aplazos)</div>
+            <div class="metric-value" id="stat-avg-with-fail">-</div>
+            <div class="metric-sub">Incluye notas &lt; 4</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Avance de carrera</div>
+            <div class="metric-value" id="stat-progress">0%</div>
+            <div class="metric-sub" id="stat-subjects-count">0 de 0 materias</div>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <div class="section-header">
+            <h2 class="section-title">Evolución y proyección</h2>
+            <span style="font-size: 12px; color: var(--text-secondary);">Línea punteada: simulador</span>
+          </div>
+          <div class="chart-wrapper" id="evolution-chart-container"></div>
+        </div>
+
+        <div class="section-card">
+          <div class="section-header">
+            <h2 class="section-title">Simulador de promedio a futuro</h2>
+            <button type="button" style="font-size: 12px; color: var(--ios-blue); font-weight: 600;" onclick="resetSimulator()">Limpiar</button>
+          </div>
+          <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 10px;">
+            Asigna notas estimadas a tus materias en curso o pendientes para proyectar tu promedio de graduación.
+          </p>
+          <div id="simulator-list"></div>
+        </div>
+      </section>
+
+      <section id="view-agenda" class="tab-view">
+        <div class="section-card">
+          <div class="section-header">
+            <h2 class="section-title">Alertas de regularidad</h2>
+            <span style="font-size: 12px; color: var(--text-secondary);">Vigencia 24 meses</span>
+          </div>
+          <div id="regularity-alerts-list"></div>
+        </div>
+
+        <div class="section-card">
+          <div class="section-header">
+            <h2 class="section-title">Exámenes y entregas</h2>
+            <button type="button" class="btn-add-level" onclick="openEventModal()">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Agregar evento
+            </button>
+          </div>
+          <div id="agenda-events-list"></div>
+        </div>
+      </section>
+
+      <section id="view-manage" class="tab-view">
+        <div style="margin-bottom: 14px;">
+          <h2 style="font-size: 18px; font-weight: 700;">Plan de estudios por nivel</h2>
+          <p style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">Despliega cada nivel para editar, eliminar o incorporar asignaturas.</p>
+        </div>
+        <div id="manage-levels-container"></div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <div class="bottom-nav-inner">
+        <button type="button" class="nav-tab active" data-tab="malla" onclick="switchTab('malla')">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect></svg>
+          <span>Materias</span>
+        </button>
+        <button type="button" class="nav-tab" data-tab="stats" onclick="switchTab('stats')">
+          <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          <span>Estadísticas</span>
+        </button>
+        <button type="button" class="nav-tab" data-tab="agenda" onclick="switchTab('agenda')">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          <span>Agenda</span>
+        </button>
+        <button type="button" class="nav-tab" data-tab="manage" onclick="switchTab('manage')">
+          <svg class="icon" viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+          <span>Gestionar</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <div class="sheet-backdrop" id="subject-sheet-backdrop" onclick="closeSheetOnBackdrop(event, 'subject-sheet-backdrop')">
+    <div class="ios-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <div>
+          <span id="sheet-sub-level" style="font-size: 12px; font-weight: 600; color: var(--ios-blue);">Nivel 1</span>
+          <h3 id="sheet-sub-name" style="font-size: 20px; font-weight: 700; margin-top: 2px;">Nombre Materia</h3>
+          <p id="sheet-sub-meta" style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">Anual</p>
+        </div>
+        <button type="button" class="sheet-close" onclick="closeModal('subject-sheet-backdrop')">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="rel-box">
+        <div class="rel-title">Requisitos previos</div>
+        <div id="sheet-reqs-prev"></div>
+        <div class="rel-title" style="margin-top: 10px;">Materias que destraba</div>
+        <div id="sheet-reqs-next"></div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Estado de la asignatura</label>
+        <div class="state-selector-grid" id="sheet-state-options">
+          <button type="button" class="state-option" data-state="auto" onclick="selectSheetState('auto')">Automático</button>
+          <button type="button" class="state-option" data-state="cursando" onclick="selectSheetState('cursando')">Cursando</button>
+          <button type="button" class="state-option" data-state="final" onclick="selectSheetState('final')">Final pendiente</button>
+          <button type="button" class="state-option" data-state="aprobada" onclick="selectSheetState('aprobada')">Aprobada</button>
+        </div>
+      </div>
+
+      <div id="sheet-grade-fields" style="display: none;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div class="field-group">
+            <label class="field-label" for="sheet-grade">Nota (1 a 10)</label>
+            <input class="ios-input" type="number" id="sheet-grade" min="1" max="10" step="0.5" placeholder="Ej. 8" />
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="sheet-pass-type">Condición</label>
+            <select class="ios-select" id="sheet-pass-type">
+              <option value="Promoción">Promoción directa</option>
+              <option value="Final">Examen final</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="sheet-pass-date">Fecha de aprobación</label>
+          <input class="ios-input" type="date" id="sheet-pass-date" />
+        </div>
+      </div>
+
+      <div id="sheet-reg-fields" style="display: none;">
+        <div class="field-group">
+          <label class="field-label" for="sheet-reg-date">Fecha de regularización (para alerta de vencimiento)</label>
+          <input class="ios-input" type="date" id="sheet-reg-date" />
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="sheet-catedra">Cátedra y horario</label>
+        <input class="ios-input" type="text" id="sheet-catedra" placeholder="Ej. Cátedra García · Martes y Viernes 19hs" />
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="sheet-notes">Notas personales de cátedra</label>
+        <textarea class="ios-textarea" id="sheet-notes" placeholder="Modalidad de entregas, docentes, bibliografía..."></textarea>
+      </div>
+
+      <div style="display: flex; gap: 10px;">
+        <button type="button" class="btn-secondary" onclick="activateFocusFromSheet()">Ver red en malla</button>
+        <button type="button" class="btn-primary" onclick="saveSubjectDetails()">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sheet-backdrop" id="edit-subject-backdrop" onclick="closeSheetOnBackdrop(event, 'edit-subject-backdrop')">
+    <div class="ios-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3 id="edit-subject-modal-title" style="font-size: 19px; font-weight: 700;">Nueva asignatura</h3>
+        <button type="button" class="sheet-close" onclick="closeModal('edit-subject-backdrop')">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <form onsubmit="saveManagedSubject(event)">
+        <input type="hidden" id="edit-sub-id" />
+        <div class="field-group">
+          <label class="field-label" for="edit-sub-name">Nombre de la materia</label>
+          <input class="ios-input" type="text" id="edit-sub-name" required placeholder="Ej. Estructuras 2" />
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div class="field-group">
+            <label class="field-label" for="edit-sub-level">Nivel / Año</label>
+            <select class="ios-select" id="edit-sub-level"></select>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="edit-sub-regime">Régimen de cursada</label>
+            <select class="ios-select" id="edit-sub-regime">
+              <option value="Cuatrimestral">Cuatrimestral</option>
+              <option value="Anual">Anual</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="edit-sub-level-req">Exigir nivel completo previo (opcional)</label>
+          <select class="ios-select" id="edit-sub-level-req">
+            <option value="">Ninguno (solo materias individuales)</option>
+            <option value="CBC">CBC completo</option>
+            <option value="Nivel 1">Nivel 1 completo</option>
+            <option value="Nivel 2">Nivel 2 completo</option>
+            <option value="Nivel 3">Nivel 3 completo</option>
+            <option value="Nivel 4">Nivel 4 completo</option>
+            <option value="Nivel 5">Nivel 5 completo</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Correlativas requeridas (Agrupadas por Nivel)</label>
+          <div class="checkbox-list" id="edit-sub-reqs-list"></div>
+        </div>
+
+        <button type="submit" class="btn-primary">Guardar materia</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="sheet-backdrop" id="event-modal-backdrop" onclick="closeSheetOnBackdrop(event, 'event-modal-backdrop')">
+    <div class="ios-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3 id="event-modal-title" style="font-size: 19px; font-weight: 700;">Nuevo evento académico</h3>
+        <button type="button" class="sheet-close" onclick="closeModal('event-modal-backdrop')">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <form onsubmit="saveAgendaEvent(event)">
+        <input type="hidden" id="event-id" />
+        <div class="field-group">
+          <label class="field-label" for="event-title">Título del evento</label>
+          <input class="ios-input" type="text" id="event-title" placeholder="Ej. Primer parcial Estructuras 1" required />
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div class="field-group">
+            <label class="field-label" for="event-type">Tipo</label>
+            <select class="ios-select" id="event-type">
+              <option value="Parcial">Parcial</option>
+              <option value="Final">Examen final</option>
+              <option value="Entrega TP">Entrega TP</option>
+              <option value="Inscripción">Inscripción</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="event-date">Fecha</label>
+            <input class="ios-input" type="date" id="event-date" required />
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="event-subject">Materia asociada (opcional)</label>
+          <select class="ios-select" id="event-subject"></select>
+        </div>
+        <button type="submit" class="btn-primary">Guardar evento</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="sheet-backdrop" id="profile-modal-backdrop" onclick="closeSheetOnBackdrop(event, 'profile-modal-backdrop')">
+    <div class="ios-sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3 style="font-size: 19px; font-weight: 700;">Perfil académico</h3>
+        <button type="button" class="sheet-close" onclick="closeModal('profile-modal-backdrop')">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="rel-box" style="margin-bottom: 16px;">
+        <div style="font-size: 17px; font-weight: 700;" id="modal-profile-name">Usuario</div>
+        <div style="font-size: 13px; color: var(--text-secondary); margin-top: 3px;" id="modal-profile-faculty">FADU-UBA</div>
+        <div style="font-size: 13px; color: var(--ios-blue); font-weight: 600; margin-top: 2px;" id="modal-profile-career">Arquitectura</div>
+      </div>
+
+      <div class="card-surface" style="padding: 14px 16px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <div style="font-size: 15px; font-weight: 600;">Modo noche</div>
+          <div style="font-size: 12px; color: var(--text-secondary);">Interfaz oscura nativa iOS</div>
+        </div>
+        <button type="button" class="ios-switch" id="modal-dark-switch" onclick="toggleDarkMode()" aria-label="Modo noche"></button>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
+        <button type="button" class="btn-secondary" onclick="exportBackupJSON()">Exportar JSON</button>
+        <label class="btn-secondary" style="margin: 0; cursor: pointer;">
+          Importar JSON
+          <input type="file" accept=".json" style="display: none;" onchange="importBackupJSON(event)" />
+        </label>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <button type="button" class="btn-primary" onclick="closeModal('profile-modal-backdrop')">Volver</button>
+        <button type="button" class="btn-danger-soft" onclick="logoutProfile()">Cerrar sesión</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const FACULTIES_DATA = {
+      "FADU-UBA": [
+        "Arquitectura",
+        "Diseño Gráfico",
+        "Diseño Industrial",
+        "Diseño Textil",
+        "Diseño Indumentario",
+        "Diseño Imagen y Sonido"
+      ],
+      "Agronomía-UBA": [
+        "Agronomía",
+        "Licenciatura en Ciencias Ambientales",
+        "Licenciatura en Economía y Administración Agrarias",
+        "Licenciatura en Gestión de Agroalimentos",
+        "Biotecnología"
+      ],
+      "Ingeniería-UBA": [
+        "Bioingeniería",
+        "Ingeniería en Agrimensura",
+        "Ingeniería en Alimentos",
+        "Ingeniería Civil"
+      ]
+    };
+
+    const LEVELS = ["CBC", "Nivel 1", "Nivel 2", "Nivel 3", "Nivel 4", "Nivel 5"];
+
+    function getDefaultFaduArquitecturaPlan() {
+      return [
+        { id: "cbc_icse", name: "Int. al Conocimiento de la Sociedad y el Estado", level: "CBC", regime: "Cuatrimestral", reqs: [], requiredLevel: "", manualState: "aprobada", grade: 8, passType: "Promoción", passDate: "2024-07-10", regDate: "", catedra: "Cátedra Única", notes: "" },
+        { id: "cbc_ipc", name: "Int. al Pensamiento Científico", level: "CBC", regime: "Cuatrimestral", reqs: [], requiredLevel: "", manualState: "aprobada", grade: 9, passType: "Promoción", passDate: "2024-07-12", regDate: "", catedra: "Cátedra Cáceres", notes: "" },
+        { id: "cbc_mat", name: "Matemática", level: "CBC", regime: "Cuatrimestral", reqs: [], requiredLevel: "", manualState: "aprobada", grade: 7, passType: "Final", passDate: "2024-12-05", regDate: "", catedra: "", notes: "" },
+        { id: "cbc_proy1", name: "Proyectual 1", level: "CBC", regime: "Cuatrimestral", reqs: [], requiredLevel: "", manualState: "aprobada", grade: 8, passType: "Promoción", passDate: "2024-07-15", regDate: "", catedra: "Taller Arq", notes: "" },
+        { id: "cbc_proy2", name: "Proyectual 2", level: "CBC", regime: "Cuatrimestral", reqs: ["cbc_proy1"], requiredLevel: "", manualState: "aprobada", grade: 8, passType: "Promoción", passDate: "2024-11-28", regDate: "", catedra: "Taller Arq", notes: "" },
+        { id: "cbc_dibujo", name: "Taller de Dibujo", level: "CBC", regime: "Anual", reqs: [], requiredLevel: "", manualState: "aprobada", grade: 9, passType: "Promoción", passDate: "2024-11-30", regDate: "", catedra: "", notes: "" },
+        { id: "cbc_fadu", name: "Conocimiento Proyectual / Int. Diseño", level: "CBC", regime: "Cuatrimestral", reqs: [], requiredLevel: "", manualState: "aprobada", grade: 8, passType: "Promoción", passDate: "2024-11-25", regDate: "", catedra: "", notes: "" },
+
+        { id: "n1_arq1", name: "Arquitectura 1", level: "Nivel 1", regime: "Anual", reqs: [], requiredLevel: "CBC", manualState: "aprobada", grade: 8, passType: "Promoción", passDate: "2025-11-20", regDate: "", catedra: "Cátedra Solsona", notes: "Maquetas de estudio todas las clases." },
+        { id: "n1_iac", name: "Introducción a la Arquitectura Contemporánea", level: "Nivel 1", regime: "Cuatrimestral", reqs: [], requiredLevel: "CBC", manualState: "aprobada", grade: 7, passType: "Promoción", passDate: "2025-07-14", regDate: "", catedra: "Cátedra Molina y Vedia", notes: "" },
+        { id: "n1_ite", name: "Introducción a los Tipos Estructurales", level: "Nivel 1", regime: "Cuatrimestral", reqs: [], requiredLevel: "CBC", manualState: "final", grade: null, passType: "Final", passDate: "", regDate: "2025-07-18", catedra: "Cátedra Cisternas", notes: "Repasar diagramas de momentos para el final." },
+        { id: "n1_itc", name: "Introducción a los Tipos Constructivos", level: "Nivel 1", regime: "Cuatrimestral", reqs: [], requiredLevel: "CBC", manualState: "aprobada", grade: 8, passType: "Final", passDate: "2025-12-10", regDate: "", catedra: "Cátedra Castellano", notes: "" },
+        { id: "n1_fisica", name: "Física Aplicada a la Arquitectura", level: "Nivel 1", regime: "Cuatrimestral", reqs: [], requiredLevel: "CBC", manualState: "aprobada", grade: 7, passType: "Promoción", passDate: "2025-11-18", regDate: "", catedra: "Cátedra Roscardi", notes: "" },
+        { id: "n1_mat2", name: "Matemática 2", level: "Nivel 1", regime: "Cuatrimestral", reqs: [], requiredLevel: "CBC", manualState: "aprobada", grade: 6, passType: "Final", passDate: "2025-12-16", regDate: "", catedra: "Cátedra Blumenfarb", notes: "" },
+        { id: "n1_srg", name: "Sistemas de Representación Geométrica", level: "Nivel 1", regime: "Cuatrimestral", reqs: [], requiredLevel: "CBC", manualState: "aprobada", grade: 9, passType: "Promoción", passDate: "2025-07-11", regDate: "", catedra: "Cátedra Garcia", notes: "" },
+
+        { id: "n2_arq2", name: "Arquitectura 2", level: "Nivel 2", regime: "Anual", reqs: ["n1_arq1", "n1_srg"], requiredLevel: "", manualState: "cursando", grade: null, passType: "Promoción", passDate: "", regDate: "", catedra: "Cátedra Roca", notes: "Proyecto vivienda colectiva en el segundo cuatrimestre." },
+        { id: "n2_morf1", name: "Morfología 1", level: "Nivel 2", regime: "Anual", reqs: ["n1_arq1", "n1_srg"], requiredLevel: "", manualState: "cursando", grade: null, passType: "Promoción", passDate: "", regDate: "", catedra: "Cátedra Wainhaus", notes: "" },
+        { id: "n2_hist1", name: "Historia 1", level: "Nivel 2", regime: "Anual", reqs: ["n1_iac"], requiredLevel: "", manualState: "auto", grade: null, passType: "Final", passDate: "", regDate: "", catedra: "", notes: "" },
+        { id: "n2_est1", name: "Estructuras 1", level: "Nivel 2", regime: "Anual", reqs: ["n1_ite", "n1_mat2"], requiredLevel: "", manualState: "auto", grade: null, passType: "Final", passDate: "", regDate: "", catedra: "", notes: "" },
+        { id: "n2_const1", name: "Construcciones 1", level: "Nivel 2", regime: "Anual", reqs: ["n1_itc", "n1_fisica"], requiredLevel: "", manualState: "auto", grade: null, passType: "Final", passDate: "", regDate: "", catedra: "", notes: "" },
+        { id: "n2_inst1", name: "Instalaciones 1", level: "Nivel 2", regime: "Anual", reqs: ["n1_itc", "n1_fisica"], requiredLevel: "", manualState: "auto", grade: null, passType: "Final", passDate: "", regDate: "", catedra: "", notes: "" },
+        { id: "n2_rep", name: "Representación Arquitectónica", level: "Nivel 2", regime: "Cuatrimestral", reqs: ["n1_arq1", "n1_srg"], requiredLevel: "", manualState: "auto", grade: null, passType: "Promoción", passDate: "", regDate: "", catedra: "", notes: "" },
+
+        { id: "n3_arq3", name: "Arquitectura 3", level: "Nivel 3", regime: "Anual", reqs: ["n2_arq2", "n2_morf1", "n2_rep"], requiredLevel: "", manualState: "auto", grade: null, passType: "Promoción", passDate: "", regDate: "", catedra: "", notes: "" },
+        { id: "n3_morf2", name: "Morfología 2", level: "Nivel 3", regime: "Anual", reqs: ["n2_morf1", "n2_rep"], requiredLevel: "", manualState: "auto", grade: null, passType: "Promoción", passDate: "", regDate: "", catedra: "", notes: "" },
+        { id: "n3_hist2", name: "Historia 2", level: "Nivel 3", regime: "Anual", reqs: ["n2_hist1"], requiredLevel: "", manualState: "auto", grade: null, passType: "Final", passDate: "", regDate: "", catedra: "", notes: "" },
+        { id: "n3_est2", name: "Estructuras 2", level: "Nivel 3", regime: "Anual", reqs: ["n2_est1"], requiredLevel: "", manualState: "auto", grade: null, passType: "Final", passDate: "", regDate: "", catedra: "", notes: "" },
+        { id: "n3_const2", name: "Construcciones 2", level: "Nivel 3", regime: "Anual", reqs: ["n2_const1"], requiredLevel: "", manualState: "auto", grade: null, passType: "Final", passDate: "", regDate: "", catedra: "", notes: "" },
+        { id: "n3_inst2", name: "Instalaciones 2", level: "Nivel 3", regime: "Anual", reqs: ["n2_inst1"], requiredLevel: "", manualState: "auto", grade: null, passType: "Final", passDate: "", regDate: "", catedra: "", notes: "" },
+        { id: "n3_mat3", name: "Materialización de Proyectos", level: "Nivel 3", regime: "Cuatrimestral", reqs: ["n2_const1", "n2_est1"], requiredLevel: "", manualState: "auto", grade: null, passType: "Promoción", passDate: "", regDate: "", catedra: "", notes: "" },
+
+        { id: "n4_arq4", name: "Arquitectura 4", level: "Nivel 4", regime: "Anual", reqs: ["n3_arq3", "n3_morf2", "n3_est2", "n3_const2"], requiredLevel: "", manualState: "auto", grade: null, passType: "Promoción", passDate: "", regDate: "", catedra: "", notes: "" },
+        { id: "n4_pu", name: "Planificación Urbana", level: "Nivel 4", regime: "Anual", reqs: ["n3_arq3", "n3_hist2"], requiredLevel: "", manualState: "auto", grade: null, passType: "Final", passDate: "", regDate: "", catedra: "", notes: "" },
+        { id: "n4_hist3", name: "Historia 3", level: "Nivel 4", regime: "Anual", reqs: ["n3_hist2"], requiredLevel: "", manualState: "auto", grade: null, passType: "Final", passDate: "", regDate: "", catedra: "", notes: "" },
+        { id: "n4_est3", name: "Estructuras 3", level: "Nivel 4", regime: "Anual", reqs: ["n3_est2"], requiredLevel: "", manualState: "auto", grade: null, passType: "Final", passDate: "", regDate: "", catedra: "", notes: "" },
+        { id: "n4_const3", name: "Construcciones 3", level: "Nivel 4", regime: "Anual", reqs: ["n3_const2", "n3_mat3"], requiredLevel: "", manualState: "auto", grade: null, passType: "Final", passDate: "", regDate: "", catedra: "", notes: "" },
+        { id: "n4_inst3", name: "Instalaciones 3", level: "Nivel 4", regime: "Anual", reqs: ["n3_inst2"], requiredLevel: "", manualState: "auto", grade: null, passType: "Final", passDate: "", regDate: "", catedra: "", notes: "" },
+
+        { id: "n5_pa", name: "Proyecto Arquitectónico", level: "Nivel 5", regime: "Anual", reqs: ["n4_arq4", "n4_est3", "n4_const3", "n4_inst3"], requiredLevel: "", manualState: "auto", grade: null, passType: "Promoción", passDate: "", regDate: "", catedra: "", notes: "" },
+        { id: "n5_pu", name: "Proyecto Urbano", level: "Nivel 5", regime: "Anual", reqs: ["n4_arq4", "n4_pu", "n4_hist3"], requiredLevel: "", manualState: "auto", grade: null, passType: "Promoción", passDate: "", regDate: "", catedra: "", notes: "" },
+        { id: "n5_leg", name: "Dirección y Legislación de Obra", level: "Nivel 5", regime: "Anual", reqs: ["n4_const3"], requiredLevel: "", manualState: "auto", grade: null, passType: "Final", passDate: "", regDate: "", catedra: "", notes: "" },
+        { id: "n5_ppa", name: "Práctica Profesional Asistida (PPA)", level: "Nivel 5", regime: "Cuatrimestral", reqs: ["n4_arq4"], requiredLevel: "", manualState: "auto", grade: null, passType: "Promoción", passDate: "", regDate: "", catedra: "", notes: "" }
+      ];
+    }
+
+    function getDefaultEvents() {
+      return [
+        { id: "ev_1", title: "Llamado de Final - Int. Tipos Estructurales", type: "Final", date: "2026-12-03", subjectId: "n1_ite" },
+        { id: "ev_2", title: "Entrega Esquicio Arquitectura 2", type: "Entrega TP", date: "2026-11-24", subjectId: "n2_arq2" }
+      ];
+    }
+
+    const STORAGE_KEY = "curricular_app_v3";
+    let appState = {
+      profiles: [],
+      activeProfileId: null,
+      darkMode: false
+    };
+
+    let currentLevel = "Nivel 2";
+    let currentFilter = "all";
+    let focusSubjectId = null;
+    let isBoardView = false;
+    let activeSheetSubjectId = null;
+    let selectedSheetState = "auto";
+    let simulatedGrades = {};
+    let openManageLevels = { "Nivel 1": true };
+
+    function init() {
+      loadStorage();
+      applyDarkModeUI();
+      populateFacultySelectors();
+
+      if (appState.profiles.length === 0) {
+        const demoProfile = {
+          id: "prof_demo",
+          username: "Estudiante FADU",
+          faculty: "FADU-UBA",
+          career: "Arquitectura",
+          subjects: getDefaultFaduArquitecturaPlan(),
+          events: getDefaultEvents()
+        };
+        appState.profiles.push(demoProfile);
+        saveStorage();
+      }
+
+      if (appState.activeProfileId && getActiveProfile()) {
+        enterApp();
+      } else {
+        showOnboarding();
+      }
+    }
+
+    function loadStorage() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          appState = { ...appState, ...parsed };
+        }
+      } catch (e) {
+        console.error("Error cargando datos locales", e);
+      }
+    }
+
+    function saveStorage() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+    }
+
+    function getActiveProfile() {
+      return appState.profiles.find(p => p.id === appState.activeProfileId) || null;
+    }
+
+    function toggleDarkMode() {
+      appState.darkMode = !appState.darkMode;
+      saveStorage();
+      applyDarkModeUI();
+    }
+
+    function applyDarkModeUI() {
+      document.body.classList.toggle("dark-mode", appState.darkMode);
+      const themeColor = appState.darkMode ? "#000000" : "#F5F5F7";
+      const metaTheme = document.getElementById("meta-theme-color");
+      if (metaTheme) metaTheme.setAttribute("content", themeColor);
+
+      const sw1 = document.getElementById("onboarding-dark-switch");
+      const sw2 = document.getElementById("modal-dark-switch");
+      if (sw1) sw1.classList.toggle("on", appState.darkMode);
+      if (sw2) sw2.classList.toggle("on", appState.darkMode);
+    }
+
+    function populateFacultySelectors() {
+      const facSelect = document.getElementById("select-faculty");
+      facSelect.innerHTML = Object.keys(FACULTIES_DATA)
+        .map(f => `<option value="${f}">${f}</option>`)
+        .join("");
+      updateCareerOptions();
+    }
+
+    function updateCareerOptions() {
+      const fac = document.getElementById("select-faculty").value;
+      const careerSelect = document.getElementById("select-career");
+      const careers = FACULTIES_DATA[fac] || [];
+      careerSelect.innerHTML = careers
+        .map(c => `<option value="${c}">${c}</option>`)
+        .join("");
+    }
+
+    function switchAuthMode(mode) {
+      document.getElementById("tab-login-btn").classList.toggle("active", mode === "login");
+      document.getElementById("tab-create-btn").classList.toggle("active", mode === "create");
+      document.getElementById("auth-login-view").style.display = mode === "login" ? "block" : "none";
+      document.getElementById("auth-create-view").style.display = mode === "create" ? "block" : "none";
+    }
+
+    function showOnboarding() {
+      document.getElementById("onboarding-screen").style.display = "flex";
+      document.getElementById("app-shell").style.display = "none";
+      renderSavedProfiles();
+      if (appState.profiles.length === 0) {
+        switchAuthMode("create");
+      } else {
+        switchAuthMode("login");
+      }
+    }
+
+    function renderSavedProfiles() {
+      const container = document.getElementById("saved-profiles-container");
+      if (appState.profiles.length === 0) {
+        container.innerHTML = `<p style="text-align:center; color: var(--text-secondary); font-size: 14px; padding: 12px 0;">No hay usuarios guardados. Crea tu perfil para empezar.</p>`;
+        return;
+      }
+
+      container.innerHTML = appState.profiles.map(p => `
+        <div class="profile-item">
+          <div class="profile-info" onclick="selectProfile('${p.id}')">
+            <div class="profile-name">${escapeHtml(p.username)}</div>
+            <div class="profile-meta">${escapeHtml(p.faculty)} · ${escapeHtml(p.career)}</div>
+          </div>
+          <button type="button" class="btn-delete-profile" onclick="deleteProfile('${p.id}')" title="Eliminar usuario">
+            <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+            <span>Eliminar</span>
+          </button>
+        </div>
+      `).join("");
+    }
+
+    function handleCreateProfile(e) {
+      e.preventDefault();
+      const username = document.getElementById("input-username").value.trim();
+      const faculty = document.getElementById("select-faculty").value;
+      const career = document.getElementById("select-career").value;
+      if (!username) return;
+
+      const isFaduArq = faculty === "FADU-UBA" && career === "Arquitectura";
+      const starterSubjects = isFaduArq
+        ? getDefaultFaduArquitecturaPlan()
+        : [
+            { id: "mat_01", name: "Introducción a la Carrera", level: "CBC", regime: "Cuatrimestral", reqs: [], requiredLevel: "", manualState: "auto", grade: null, passType: "Promoción", passDate: "", regDate: "", catedra: "", notes: "" },
+            { id: "mat_02", name: "Taller Inicial 1", level: "Nivel 1", regime: "Anual", reqs: ["mat_01"], requiredLevel: "", manualState: "auto", grade: null, passType: "Promoción", passDate: "", regDate: "", catedra: "", notes: "" }
+          ];
+
+      const newProfile = {
+        id: "prof_" + Date.now(),
+        username,
+        faculty,
+        career,
+        subjects: starterSubjects,
+        events: []
+      };
+
+      appState.profiles.push(newProfile);
+      appState.activeProfileId = newProfile.id;
+      saveStorage();
+      document.getElementById("input-username").value = "";
+      enterApp();
+    }
+
+    function selectProfile(id) {
+      appState.activeProfileId = id;
+      saveStorage();
+      enterApp();
+    }
+
+    function deleteProfile(id) {
+      appState.profiles = appState.profiles.filter(p => p.id !== id);
+      if (appState.activeProfileId === id) {
+        appState.activeProfileId = null;
+      }
+      saveStorage();
+      renderSavedProfiles();
+    }
+
+    function logoutProfile() {
+      closeModal("profile-modal-backdrop");
+      appState.activeProfileId = null;
+      saveStorage();
+      showOnboarding();
+    }
+
+    function enterApp() {
+      const profile = getActiveProfile();
+      if (!profile) return showOnboarding();
+
+      document.getElementById("onboarding-screen").style.display = "none";
+      document.getElementById("app-shell").style.display = "block";
+
+      document.getElementById("header-career-title").textContent = profile.career;
+      document.getElementById("header-faculty-sub").textContent = profile.faculty;
+      document.getElementById("header-user-name").textContent = profile.username;
+      document.getElementById("header-avatar").textContent = profile.username.charAt(0).toUpperCase();
+
+      simulatedGrades = {};
+      focusSubjectId = null;
+
+      const firstActive = profile.subjects.find(s => {
+        const st = computeEffectiveState(s, profile.subjects);
+        return st === "cursando" || st === "habilitada";
+      });
+      if (firstActive) currentLevel = firstActive.level;
+
+      renderAll();
+    }
+
+    function computeEffectiveState(subject, allSubjects) {
+      if (subject.manualState === "aprobada") return "aprobada";
+      if (subject.manualState === "final") return "final";
+      if (subject.manualState === "cursando") return "cursando";
+
+      let levelMet = true;
+      if (subject.requiredLevel) {
+        const levelSubs = allSubjects.filter(s => s.level === subject.requiredLevel);
+        levelMet = levelSubs.every(s => s.manualState === "aprobada" || s.manualState === "final");
+      }
+
+      const reqsMet = (!subject.reqs || subject.reqs.length === 0) || subject.reqs.every(reqId => {
+        const reqSub = allSubjects.find(s => s.id === reqId);
+        if (!reqSub) return true;
+        return reqSub.manualState === "aprobada" || reqSub.manualState === "final";
+      });
+
+      return (levelMet && reqsMet) ? "habilitada" : "bloqueada";
+    }
+
+    function getStateMeta(state) {
+      switch (state) {
+        case "aprobada":
+          return { label: "Aprobada", led: "led-aprobada", badge: "badge-aprobada" };
+        case "final":
+          return { label: "Final pendiente", led: "led-final", badge: "badge-final" };
+        case "cursando":
+          return { label: "Cursando", led: "led-cursando", badge: "badge-cursando" };
+        case "habilitada":
+          return { label: "Habilitada", led: "led-habilitada", badge: "badge-habilitada" };
+        default:
+          return { label: "Bloqueada", led: "led-bloqueada", badge: "badge-bloqueada" };
+      }
+    }
+
+    function renderAll() {
+      renderLevelPills();
+      renderMalla();
+      renderStats();
+      renderAgenda();
+      renderManage();
+    }
+
+    function switchTab(tabName) {
+      document.querySelectorAll(".tab-view").forEach(v => v.classList.remove("active"));
+      document.querySelectorAll(".nav-tab").forEach(b => b.classList.remove("active"));
+      document.getElementById("view-" + tabName).classList.add("active");
+      document.querySelector(`.nav-tab[data-tab="${tabName}"]`).classList.add("active");
+
+      if (tabName === "stats") renderStats();
+      if (tabName === "agenda") renderAgenda();
+      if (tabName === "manage") renderManage();
+    }
+
+    function renderLevelPills() {
+      const container = document.getElementById("level-pills");
+      if (isBoardView) {
+        container.style.display = "none";
+        return;
+      }
+      container.style.display = "flex";
+      container.innerHTML = LEVELS.map(lvl => `
+        <button type="button" class="pill-btn ${lvl === currentLevel ? "active" : ""}" onclick="selectLevel('${lvl}')">${lvl}</button>
+      `).join("");
+    }
+
+    function selectLevel(lvl) {
+      currentLevel = lvl;
+      renderLevelPills();
+      renderMalla();
+    }
+
+    function setFilter(filter) {
+      currentFilter = filter;
+      document.querySelectorAll(".filter-pill").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.filter === filter);
+      });
+      renderMalla();
+    }
+
+    function toggleBoardView() {
+      isBoardView = !isBoardView;
+      document.getElementById("board-toggle-label").textContent = isBoardView ? "Vista por nivel" : "Vista panorámica";
+      renderLevelPills();
+      renderMalla();
+    }
+
+    function clearFocusMode() {
+      focusSubjectId = null;
+      document.getElementById("focus-banner").classList.remove("visible");
+      renderMalla();
+    }
+
+    function renderMalla() {
+      const profile = getActiveProfile();
+      if (!profile) return;
+      const container = document.getElementById("subjects-container");
+      const all = profile.subjects;
+
+      let prevIds = new Set();
+      let nextIds = new Set();
+      if (focusSubjectId) {
+        const target = all.find(s => s.id === focusSubjectId);
+        if (target) {
+          if (target.requiredLevel) {
+            all.filter(s => s.level === target.requiredLevel).forEach(s => prevIds.add(s.id));
+          }
+          (target.reqs || []).forEach(id => prevIds.add(id));
+          all.forEach(s => {
+            if ((s.reqs || []).includes(focusSubjectId)) nextIds.add(s.id);
+          });
+        }
+        document.getElementById("focus-banner").classList.add("visible");
+        container.classList.add("focus-active");
+      } else {
+        document.getElementById("focus-banner").classList.remove("visible");
+        container.classList.remove("focus-active");
+      }
+
+      const buildCardHTML = (sub) => {
+        const effState = computeEffectiveState(sub, all);
+        if (currentFilter !== "all" && effState !== currentFilter) return "";
+
+        const meta = getStateMeta(effState);
+        let focusClass = "";
+        if (focusSubjectId === sub.id) focusClass = "focus-selected";
+        else if (prevIds.has(sub.id)) focusClass = "focus-prev";
+        else if (nextIds.has(sub.id)) focusClass = "focus-next";
+
+        const gradeText = effState === "aprobada" && sub.grade ? ` · Nota: ${sub.grade}` : "";
+        const catedraText = sub.catedra ? ` · ${escapeHtml(sub.catedra)}` : "";
+
+        return `
+          <article class="subject-card state-${effState} ${focusClass}" onclick="openSubjectSheet('${sub.id}')">
+            <div class="card-top-row">
+              <div class="subject-title-wrap">
+                <span class="led-dot ${meta.led}"></span>
+                <h3 class="subject-name">${escapeHtml(sub.name)}</h3>
+              </div>
+              <span class="status-badge ${meta.badge}">${meta.label}</span>
+            </div>
+            <div class="subject-meta">
+              <span>${sub.regime}${gradeText}${catedraText}</span>
+            </div>
+          </article>
+        `;
+      };
+
+      if (isBoardView) {
+        container.classList.add("board-mode");
+        container.innerHTML = LEVELS.map(lvl => {
+          const levelSubs = all.filter(s => s.level === lvl);
+          const cards = levelSubs.map(buildCardHTML).join("");
+          return `
+            <div class="board-column">
+              <div class="board-col-header">
+                <span>${lvl}</span>
+                <span>${levelSubs.length}</span>
+              </div>
+              ${cards || `<p style="font-size:12px; color:var(--text-tertiary); padding:8px 4px;">Sin asignaturas</p>`}
+            </div>
+          `;
+        }).join("");
+      } else {
+        container.classList.remove("board-mode");
+        const levelSubs = all.filter(s => s.level === currentLevel);
+        const cards = levelSubs.map(buildCardHTML).join("");
+        container.innerHTML = cards || `
+          <div class="card-surface" style="text-align:center; padding: 28px 16px; color: var(--text-secondary);">
+            No hay materias que coincidan con el filtro seleccionado en ${currentLevel}.
+          </div>
+        `;
+      }
+    }
+
+    function openSubjectSheet(subjectId) {
+      const profile = getActiveProfile();
+      const sub = profile.subjects.find(s => s.id === subjectId);
+      if (!sub) return;
+
+      activeSheetSubjectId = subjectId;
+      document.getElementById("sheet-sub-level").textContent = sub.level;
+      document.getElementById("sheet-sub-name").textContent = sub.name;
+      document.getElementById("sheet-sub-meta").textContent = sub.regime;
+
+      const prevEl = document.getElementById("sheet-reqs-prev");
+      let reqsHtml = "";
+      if (sub.requiredLevel) {
+        reqsHtml += `<span class="rel-chip" style="background:var(--ios-blue-soft); color:var(--ios-blue);">Nivel ${sub.requiredLevel} completo</span>`;
+      }
+      if (sub.reqs && sub.reqs.length > 0) {
+        sub.reqs.forEach(rid => {
+          const r = profile.subjects.find(x => x.id === rid);
+          if (r) {
+            const st = computeEffectiveState(r, profile.subjects);
+            const m = getStateMeta(st);
+            reqsHtml += `<span class="rel-chip"><i class="legend-dot ${m.led}"></i>${escapeHtml(r.name)}</span>`;
+          }
+        });
+      }
+      if (!reqsHtml) {
+        prevEl.innerHTML = `<span style="font-size:12px; color:var(--text-secondary);">Sin correlativas previas</span>`;
+      } else {
+        prevEl.innerHTML = reqsHtml;
+      }
+
+      const nextEl = document.getElementById("sheet-reqs-next");
+      const unlocks = profile.subjects.filter(s => (s.reqs || []).includes(sub.id) || s.requiredLevel === sub.level);
+      if (unlocks.length === 0) {
+        nextEl.innerHTML = `<span style="font-size:12px; color:var(--text-secondary);">Tramo final de carrera</span>`;
+      } else {
+        nextEl.innerHTML = unlocks.map(u => `<span class="rel-chip">${escapeHtml(u.name)}</span>`).join("");
+      }
+
+      selectSheetState(sub.manualState || "auto");
+      document.getElementById("sheet-grade").value = sub.grade || "";
+      document.getElementById("sheet-pass-type").value = sub.passType || "Promoción";
+      document.getElementById("sheet-pass-date").value = sub.passDate || "";
+      document.getElementById("sheet-reg-date").value = sub.regDate || "";
+      document.getElementById("sheet-catedra").value = sub.catedra || "";
+      document.getElementById("sheet-notes").value = sub.notes || "";
+
+      openModal("subject-sheet-backdrop");
+    }
+
+    function selectSheetState(st) {
+      selectedSheetState = st;
+      document.querySelectorAll("#sheet-state-options .state-option").forEach(btn => {
+        btn.classList.toggle("selected", btn.dataset.state === st);
+      });
+      document.getElementById("sheet-grade-fields").style.display = st === "aprobada" ? "block" : "none";
+      document.getElementById("sheet-reg-fields").style.display = st === "final" ? "block" : "none";
+    }
+
+    function activateFocusFromSheet() {
+      focusSubjectId = activeSheetSubjectId;
+      isBoardView = true;
+      document.getElementById("board-toggle-label").textContent = "Vista por nivel";
+      closeModal("subject-sheet-backdrop");
+      renderLevelPills();
+      renderMalla();
+    }
+
+    function saveSubjectDetails() {
+      const profile = getActiveProfile();
+      const sub = profile.subjects.find(s => s.id === activeSheetSubjectId);
+      if (!sub) return;
+
+      sub.manualState = selectedSheetState;
+      const gradeVal = parseFloat(document.getElementById("sheet-grade").value);
+      sub.grade = !isNaN(gradeVal) ? gradeVal : null;
+      sub.passType = document.getElementById("sheet-pass-type").value;
+      sub.passDate = document.getElementById("sheet-pass-date").value;
+      sub.regDate = document.getElementById("sheet-reg-date").value;
+      sub.catedra = document.getElementById("sheet-catedra").value.trim();
+      sub.notes = document.getElementById("sheet-notes").value.trim();
+
+      saveStorage();
+      closeModal("subject-sheet-backdrop");
+      renderAll();
+    }
+
+    function renderStats() {
+      const profile = getActiveProfile();
+      if (!profile) return;
+      const all = profile.subjects;
+
+      const approved = all.filter(s => computeEffectiveState(s, all) === "aprobada");
+      const graded = approved.filter(s => typeof s.grade === "number" && !isNaN(s.grade));
+      const noFailGraded = graded.filter(s => s.grade >= 4);
+
+      const avgNoFail = noFailGraded.length
+        ? (noFailGraded.reduce((acc, s) => acc + s.grade, 0) / noFailGraded.length).toFixed(2)
+        : "-";
+
+      const avgWithFail = graded.length
+        ? (graded.reduce((acc, s) => acc + s.grade, 0) / graded.length).toFixed(2)
+        : "-";
+
+      const pct = all.length ? Math.round((approved.length / all.length) * 100) : 0;
+
+      document.getElementById("stat-avg-no-fail").textContent = avgNoFail;
+      document.getElementById("stat-avg-with-fail").textContent = avgWithFail;
+      document.getElementById("stat-progress").textContent = `${pct}%`;
+      document.getElementById("stat-subjects-count").textContent = `${approved.length} de ${all.length} materias`;
+
+      renderSimulatorList(all);
+      renderEvolutionChart(all);
+    }
+
+    function renderSimulatorList(all) {
+      const pending = all.filter(s => computeEffectiveState(s, all) !== "aprobada");
+      const container = document.getElementById("simulator-list");
+
+      if (pending.length === 0) {
+        container.innerHTML = `<p style="font-size:13px; color:var(--text-secondary);">¡Completaste todas las materias del plan!</p>`;
+        return;
+      }
+
+      container.innerHTML = pending.slice(0, 12).map(s => `
+        <div class="sim-row">
+          <div>
+            <div style="font-size:14px; font-weight:600;">${escapeHtml(s.name)}</div>
+            <div style="font-size:11px; color:var(--text-secondary);">${s.level}</div>
+          </div>
+          <input class="sim-input" type="number" min="4" max="10" step="0.5" placeholder="Nota"
+            value="${simulatedGrades[s.id] || ""}"
+            onchange="updateSimulatedGrade('${s.id}', this.value)" />
+        </div>
+      `).join("");
+    }
+
+    function updateSimulatedGrade(subId, val) {
+      const num = parseFloat(val);
+      if (!isNaN(num) && num >= 1 && num <= 10) {
+        simulatedGrades[subId] = num;
+      } else {
+        delete simulatedGrades[subId];
+      }
+      const profile = getActiveProfile();
+      if (profile) renderEvolutionChart(profile.subjects);
+    }
+
+    function resetSimulator() {
+      simulatedGrades = {};
+      renderStats();
+    }
+
+    function renderEvolutionChart(all) {
+      const chartContainer = document.getElementById("evolution-chart-container");
+      const points = [];
+      let runningSum = 0;
+      let runningCount = 0;
+
+      LEVELS.forEach(lvl => {
+        const lvlApproved = all.filter(s => s.level === lvl && computeEffectiveState(s, all) === "aprobada" && typeof s.grade === "number" && s.grade >= 4);
+        if (lvlApproved.length > 0) {
+          lvlApproved.forEach(s => {
+            runningSum += s.grade;
+            runningCount++;
+          });
+          points.push({ label: lvl, value: runningSum / runningCount, projected: false });
+        }
+      });
+
+      const simValues = Object.values(simulatedGrades);
+      if (simValues.length > 0) {
+        simValues.forEach(v => {
+          runningSum += v;
+          runningCount++;
+        });
+        points.push({ label: "Proyección", value: runningSum / runningCount, projected: true });
+      }
+
+      if (points.length === 0) {
+        chartContainer.innerHTML = `<p style="font-size:13px; color:var(--text-secondary); padding: 14px 0;">Carga calificaciones en tus materias aprobadas para visualizar la curva de evolución.</p>`;
+        return;
+      }
+
+      const w = 520;
+      const h = 170;
+      const padX = 42;
+      const padY = 24;
+      const plotW = w - padX * 2;
+      const plotH = h - padY * 2;
+
+      const coords = points.map((pt, i) => {
+        const x = points.length === 1 ? w / 2 : padX + (i / (points.length - 1)) * plotW;
+        const normalizedY = Math.max(0, Math.min(1, (pt.value - 4) / 6));
+        const y = padY + plotH - normalizedY * plotH;
+        return { ...pt, x, y };
+      });
+
+      let pathSolid = "";
+      let pathDashed = "";
+      coords.forEach((c, i) => {
+        if (i === 0) {
+          pathSolid += `M ${c.x} ${c.y}`;
+        } else if (c.projected) {
+          const prev = coords[i - 1];
+          pathDashed += `M ${prev.x} ${prev.y} L ${c.x} ${c.y}`;
+        } else {
+          pathSolid += ` L ${c.x} ${c.y}`;
+        }
+      });
+
+      chartContainer.innerHTML = `
+        <svg viewBox="0 0 ${w} ${h}" style="width:100%; min-width:340px; height:auto; display:block;">
+          <line x1="${padX}" y1="${padY}" x2="${w - padX}" y2="${padY}" stroke="var(--border-color)" stroke-dasharray="3 3" />
+          <line x1="${padX}" y1="${padY + plotH / 2}" x2="${w - padX}" y2="${padY + plotH / 2}" stroke="var(--border-color)" stroke-dasharray="3 3" />
+          <line x1="${padX}" y1="${padY + plotH}" x2="${w - padX}" y2="${padY + plotH}" stroke="var(--border-color)" />
+
+          <text x="10" y="${padY + 4}" font-size="10" fill="var(--text-tertiary)">10</text>
+          <text x="14" y="${padY + plotH / 2 + 4}" font-size="10" fill="var(--text-tertiary)">7</text>
+          <text x="14" y="${padY + plotH + 4}" font-size="10" fill="var(--text-tertiary)">4</text>
+
+          ${pathSolid ? `<path d="${pathSolid}" fill="none" stroke="var(--ios-blue)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />` : ""}
+          ${pathDashed ? `<path d="${pathDashed}" fill="none" stroke="var(--ios-green)" stroke-width="2.5" stroke-dasharray="5 5" stroke-linecap="round" />` : ""}
+
+          ${coords.map(c => `
+            <circle cx="${c.x}" cy="${c.y}" r="4.5" fill="${c.projected ? "var(--ios-green)" : "var(--ios-blue)"}" />
+            <text x="${c.x}" y="${c.y - 9}" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text-primary)">${c.value.toFixed(2)}</text>
+            <text x="${c.x}" y="${h - 4}" text-anchor="middle" font-size="10" fill="var(--text-secondary)">${c.label}</text>
+          `).join("")}
+        </svg>
+      `;
+    }
+
+    function renderAgenda() {
+      const profile = getActiveProfile();
+      if (!profile) return;
+
+      const regSubjects = profile.subjects.filter(s => computeEffectiveState(s, profile.subjects) === "final");
+      const regList = document.getElementById("regularity-alerts-list");
+
+      if (regSubjects.length === 0) {
+        regList.innerHTML = `<p style="font-size:13px; color:var(--text-secondary);">No tienes finales pendientes de regularidad.</p>`;
+      } else {
+        const now = new Date();
+        regList.innerHTML = regSubjects.map(s => {
+          let deadlineText = "Configura la fecha de regularización para calcular vencimiento.";
+          let isUrgent = false;
+
+          if (s.regDate) {
+            const reg = new Date(s.regDate + "T00:00:00");
+            const exp = new Date(reg);
+            exp.setMonth(exp.getMonth() + 24);
+            const diffDays = Math.ceil((exp - now) / (1000 * 60 * 60 * 24));
+            const monthsLeft = Math.max(0, Math.round(diffDays / 30));
+            const approxTurns = Math.max(0, Math.floor(monthsLeft / 3));
+            isUrgent = monthsLeft <= 6;
+            deadlineText = diffDays > 0
+              ? `Vence en ${monthsLeft} meses (~${approxTurns} turnos de examen restantes)`
+              : "Regularidad vencida";
+          }
+
+          return `
+            <div class="alert-card ${isUrgent ? "urgent" : ""}" onclick="openSubjectSheet('${s.id}')" style="cursor:pointer;">
+              <div>
+                <div style="font-size:14px; font-weight:700;">${escapeHtml(s.name)}</div>
+                <div style="font-size:12px; color:var(--text-secondary); margin-top:2px;">${deadlineText}</div>
+              </div>
+              <span class="status-badge badge-final">Final</span>
+            </div>
+          `;
+        }).join("");
+      }
+
+      const eventsList = document.getElementById("agenda-events-list");
+      const sortedEvents = [...(profile.events || [])].sort((a, b) => a.date.localeCompare(b.date));
+
+      if (sortedEvents.length === 0) {
+        eventsList.innerHTML = `<p style="font-size:13px; color:var(--text-secondary);">Aún no hay parciales, entregas ni finales agendados.</p>`;
+      } else {
+        const months = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];
+        eventsList.innerHTML = sortedEvents.map(ev => {
+          const parts = ev.date.split("-");
+          const day = parts[2] || "01";
+          const monthIdx = (parseInt(parts[1], 10) || 1) - 1;
+          const sub = profile.subjects.find(s => s.id === ev.subjectId);
+
+          return `
+            <div class="event-item">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div class="event-date-box">
+                  <div class="event-day">${day}</div>
+                  <div class="event-month">${months[monthIdx]}</div>
+                </div>
+                <div>
+                  <div style="font-size:14px; font-weight:600;">${escapeHtml(ev.title)}</div>
+                  <div style="font-size:12px; color:var(--text-secondary); margin-top:2px;">
+                    ${escapeHtml(ev.type)}${sub ? " · " + escapeHtml(sub.name) : ""}
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex; gap:6px;">
+                <button type="button" class="btn-row-edit" onclick="openEventModal('${ev.id}')">Editar</button>
+                <button type="button" class="btn-row-delete" onclick="deleteAgendaEvent('${ev.id}')">Borrar</button>
+              </div>
+            </div>
+          `;
+        }).join("");
+      }
+    }
+
+    function openEventModal(eventId = null) {
+      const profile = getActiveProfile();
+      const subSelect = document.getElementById("event-subject");
+      subSelect.innerHTML = `<option value="">Sin materia específica</option>` +
+        profile.subjects.map(s => `<option value="${s.id}">${escapeHtml(s.name)}</option>`).join("");
+
+      if (eventId) {
+        const ev = profile.events.find(e => e.id === eventId);
+        if (!ev) return;
+        document.getElementById("event-modal-title").textContent = "Editar evento";
+        document.getElementById("event-id").value = ev.id;
+        document.getElementById("event-title").value = ev.title;
+        document.getElementById("event-type").value = ev.type;
+        document.getElementById("event-date").value = ev.date;
+        document.getElementById("event-subject").value = ev.subjectId || "";
+      } else {
+        document.getElementById("event-modal-title").textContent = "Nuevo evento académico";
+        document.getElementById("event-id").value = "";
+        document.getElementById("event-title").value = "";
+        document.getElementById("event-type").value = "Parcial";
+        document.getElementById("event-date").value = new Date().toISOString().slice(0, 10);
+        document.getElementById("event-subject").value = "";
+      }
+      openModal("event-modal-backdrop");
+    }
+
+    function saveAgendaEvent(e) {
+      e.preventDefault();
+      const profile = getActiveProfile();
+      const id = document.getElementById("event-id").value;
+      const title = document.getElementById("event-title").value.trim();
+      const type = document.getElementById("event-type").value;
+      const date = document.getElementById("event-date").value;
+      const subjectId = document.getElementById("event-subject").value;
+
+      if (!profile.events) profile.events = [];
+
+      if (id) {
+        const idx = profile.events.findIndex(ev => ev.id === id);
+        if (idx !== -1) profile.events[idx] = { id, title, type, date, subjectId };
+      } else {
+        profile.events.push({ id: "ev_" + Date.now(), title, type, date, subjectId });
+      }
+
+      saveStorage();
+      closeModal("event-modal-backdrop");
+      renderAgenda();
+    }
+
+    function deleteAgendaEvent(id) {
+      const profile = getActiveProfile();
+      profile.events = profile.events.filter(ev => ev.id !== id);
+      saveStorage();
+      renderAgenda();
+    }
+
+    function renderManage() {
+      const profile = getActiveProfile();
+      if (!profile) return;
+      const container = document.getElementById("manage-levels-container");
+
+      container.innerHTML = LEVELS.map(lvl => {
+        const subs = profile.subjects.filter(s => s.level === lvl);
+        const isOpen = !!openManageLevels[lvl];
+
+        return `
+          <div class="level-accordion ${isOpen ? "open" : ""}">
+            <div class="level-header" onclick="toggleManageLevel('${lvl}')">
+              <div class="level-title-wrap">
+                <svg class="icon icon-sm chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                <span style="font-size:15px; font-weight:700;">${lvl}</span>
+                <span style="font-size:12px; color:var(--text-secondary);">(${subs.length})</span>
+              </div>
+              <button type="button" class="btn-add-level" onclick="event.stopPropagation(); openEditSubjectModal(null, '${lvl}')">
+                <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <span>Agregar</span>
+              </button>
+            </div>
+            <div class="level-body">
+              ${subs.length === 0
+                ? `<p style="font-size:13px; color:var(--text-secondary); padding: 10px 2px;">Sin materias cargadas en ${lvl}.</p>`
+                : subs.map(s => {
+                    let reqText = `${(s.reqs || []).length} correlativas`;
+                    if (s.requiredLevel) reqText = `Nivel ${s.requiredLevel} completo + ${s.reqs.length} mat.`;
+                    return `
+                      <div class="manage-row">
+                        <div>
+                          <div style="font-size:14px; font-weight:600;">${escapeHtml(s.name)}</div>
+                          <div style="font-size:11px; color:var(--text-secondary); margin-top:2px;">
+                            ${s.regime} · ${reqText}
+                          </div>
+                        </div>
+                        <div class="manage-actions">
+                          <button type="button" class="btn-row-edit" onclick="openEditSubjectModal('${s.id}')">
+                            <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            <span>Editar</span>
+                          </button>
+                          <button type="button" class="btn-row-delete" onclick="deleteManagedSubject('${s.id}')">
+                            <svg class="icon icon-sm" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            <span>Eliminar</span>
+                          </button>
+                        </div>
+                      </div>
+                    `;
+                  }).join("")}
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function toggleManageLevel(lvl) {
+      openManageLevels[lvl] = !openManageLevels[lvl];
+      renderManage();
+    }
+
+    function openEditSubjectModal(subjectId = null, defaultLevel = "Nivel 1") {
+      const profile = getActiveProfile();
+      const lvlSelect = document.getElementById("edit-sub-level");
+      lvlSelect.innerHTML = LEVELS.map(l => `<option value="${l}">${l}</option>`).join("");
+
+      const existing = subjectId ? profile.subjects.find(s => s.id === subjectId) : null;
+
+      document.getElementById("edit-subject-modal-title").textContent = existing ? "Editar asignatura" : "Nueva asignatura";
+      document.getElementById("edit-sub-id").value = existing ? existing.id : "";
+      document.getElementById("edit-sub-name").value = existing ? existing.name : "";
+      document.getElementById("edit-sub-level").value = existing ? existing.level : defaultLevel;
+      document.getElementById("edit-sub-regime").value = existing ? existing.regime : "Cuatrimestral";
+      document.getElementById("edit-sub-level-req").value = existing ? (existing.requiredLevel || "") : "";
+
+      const selectedReqs = new Set(existing ? (existing.reqs || []) : []);
+      const reqList = document.getElementById("edit-sub-reqs-list");
+      const otherSubjects = profile.subjects.filter(s => s.id !== subjectId);
+
+      if (otherSubjects.length === 0) {
+        reqList.innerHTML = `<p style="font-size:12px; color:var(--text-secondary); padding:4px;">No hay otras materias disponibles.</p>`;
+      } else {
+        reqList.innerHTML = LEVELS.map(lvl => {
+          const levelSubs = otherSubjects.filter(s => s.level === lvl);
+          if (levelSubs.length === 0) return "";
+          return `
+            <div style="font-size:11px; font-weight:700; text-transform:uppercase; color:var(--ios-blue); padding:6px 4px 2px; border-bottom:1px solid var(--border-color); margin-top:4px;">${lvl}</div>
+            ${levelSubs.map(s => `
+              <label class="checkbox-item">
+                <input type="checkbox" value="${s.id}" ${selectedReqs.has(s.id) ? "checked" : ""} />
+                <span>${escapeHtml(s.name)}</span>
+                <small>${s.level}</small>
+              </label>
+            `).join("")}
+          `;
+        }).join("");
+      }
+
+      openModal("edit-subject-backdrop");
+    }
+
+    function saveManagedSubject(e) {
+      e.preventDefault();
+      const profile = getActiveProfile();
+      const id = document.getElementById("edit-sub-id").value;
+      const name = document.getElementById("edit-sub-name").value.trim();
+      const level = document.getElementById("edit-sub-level").value;
+      const regime = document.getElementById("edit-sub-regime").value;
+      const requiredLevel = document.getElementById("edit-sub-level-req").value;
+
+      const checkedReqs = Array.from(document.querySelectorAll("#edit-sub-reqs-list input:checked")).map(cb => cb.value);
+
+      if (id) {
+        const sub = profile.subjects.find(s => s.id === id);
+        if (sub) {
+          sub.name = name;
+          sub.level = level;
+          sub.regime = regime;
+          sub.requiredLevel = requiredLevel;
+          sub.reqs = checkedReqs;
+        }
+      } else {
+        profile.subjects.push({
+          id: "sub_" + Date.now(),
+          name,
+          level,
+          regime,
+          requiredLevel,
+          reqs: checkedReqs,
+          manualState: "auto",
+          grade: null,
+          passType: "Promoción",
+          passDate: "",
+          regDate: "",
+          catedra: "",
+          notes: ""
+        });
+      }
+
+      openManageLevels[level] = true;
+      saveStorage();
+      closeModal("edit-subject-backdrop");
+      renderAll();
+    }
+
+    function deleteManagedSubject(id) {
+      const profile = getActiveProfile();
+      profile.subjects = profile.subjects.filter(s => s.id !== id);
+      profile.subjects.forEach(s => {
+        if (s.reqs) s.reqs = s.reqs.filter(r => r !== id);
+      });
+      saveStorage();
+      renderAll();
+    }
+
+    function openProfileModal() {
+      const profile = getActiveProfile();
+      if (!profile) return;
+      document.getElementById("modal-profile-name").textContent = profile.username;
+      document.getElementById("modal-profile-faculty").textContent = profile.faculty;
+      document.getElementById("modal-profile-career").textContent = profile.career;
+      applyDarkModeUI();
+      openModal("profile-modal-backdrop");
+    }
+
+    function exportBackupJSON() {
+      const profile = getActiveProfile();
+      if (!profile) return;
+      const blob = new Blob([JSON.stringify(profile, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `curricular_${profile.username.toLowerCase().replace(/\s+/g, "_")}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importBackupJSON(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        try {
+          const imported = JSON.parse(ev.target.result);
+          if (imported && Array.isArray(imported.subjects)) {
+            const profile = getActiveProfile();
+            profile.subjects = imported.subjects;
+            profile.events = imported.events || [];
+            saveStorage();
+            closeModal("profile-modal-backdrop");
+            renderAll();
+          }
+        } catch (err) {
+          alert("El archivo JSON seleccionado no es válido.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function openModal(id) {
+      document.getElementById(id).classList.add("open");
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove("open");
+    }
+    function closeSheetOnBackdrop(e, id) {
+      if (e.target.id === id) closeModal(id);
+    }
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    window.addEventListener("DOMContentLoaded", init);
+  </script>
+</body>
+</html>
